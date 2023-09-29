@@ -35,9 +35,7 @@ app.use("/api/v3", paymentRouter);
 app.use("/api/v4", router);
 export default app;
 
-app.get("/", (req, res) => {
-  res.send(`<h1>Site is working.<a href=${process.env.CLIENT_URL}</h1>`);
-});
+
 
 
 const __filename = fileURLToPath(import.meta.url);
