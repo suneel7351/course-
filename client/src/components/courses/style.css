@@ -1,0 +1,9 @@
+.course {
+    transition: all .3s ease;
+    padding: .3rem;
+    border: 1px solid gray;
+}
+
+.course:hover {
+    transform: translateY(-5px);
+}
