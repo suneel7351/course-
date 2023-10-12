@@ -10,10 +10,10 @@ function Footer() {
           src="https://cdn.pixabay.com/photo/2014/04/03/10/32/businessman-310819__340.png"
           alt=""
         />
-        <h1 className="text-2xl">CodeWithCoder</h1>
+        <h1 className="text-2xl">Coder's Info</h1>
         <div className="h-10 bg-slate-400 w-[2px]"></div>
       </div>
-      <div className="text-slate-500">Copyright © 2022 codewithcoder.com</div>
+      <div className="text-slate-500">Copyright © 2022 coder'sinfo.com</div>
       <div className="flex items-center gap-4">
         <a href="#">Linkedin</a>
         <a href="#">Github</a>

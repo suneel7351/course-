@@ -21,6 +21,29 @@ class AdminAction {
       }
     };
   };
+
+
+
+
+  static updateCourse = (formData,id) => {
+    return async dispatch => {
+      try {
+        dispatch({ type: 'updateCourseRequest' });
+        const { data } = await axios.put(`/api/v2/update/${id}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          withCredentials: true,
+        });
+        dispatch({ type: 'updateCourseSuccess', payload: data.message });
+      } catch (error) {
+        dispatch({
+          type: 'updateCourseFail',
+          payload: error.response.data.message,
+        });
+      }
+    };
+  };
   static addLecture = (formData, id) => {
     return async dispatch => {
       try {
@@ -39,6 +62,31 @@ class AdminAction {
       } catch (error) {
         dispatch({
           type: 'addLectureFail',
+          payload: error.response.data.message,
+        });
+      }
+    };
+  };
+
+
+  static updateLecture = (lectureId,formData, id) => {
+    return async dispatch => {
+      try {
+        dispatch({ type: 'updateLectureRequest' });
+        const { data } = await axios.put(
+          `/api/v2/course/lecture/update?courseId=${id}&lectureId=${lectureId}`,
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+            withCredentials: true,
+          }
+        );
+        dispatch({ type: 'updateLectureSuccess', payload: data.message });
+      } catch (error) {
+        dispatch({
+          type: 'updateLectureFail',
           payload: error.response.data.message,
         });
       }

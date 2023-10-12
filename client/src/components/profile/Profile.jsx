@@ -118,10 +118,14 @@ function Profile() {
     }
   }, [dispatch, error, message, userError, userMessage]);
 
+
+
+
+
   return (
-    <div className="mt-4 container mx-auto">
-      <h1 className="text-2xl p-4 shadow-sm text-bold text-slate-700 text-center">
-        User Profile
+    <div className="mt-2 container mx-auto min-h-screen">
+      <h1 className="text-2xl md:text-3xl pb-2 shadow-sm text-bold border-gray-100 text-center">
+        Profile
       </h1>
       {loading ? (
         <Loader />
@@ -185,8 +189,8 @@ function Profile() {
                   {user && user.role && user.role !== 'admin' && (
                     <div>
                       {user &&
-                      user.subscription &&
-                      user.subscription.status === 'active' ? (
+                        user.subscription &&
+                        user.subscription.status === 'active' ? (
                         <>
                           {' '}
                           {Loading ? (
@@ -215,7 +219,7 @@ function Profile() {
                     <span className="w-48">Full Name</span>
                     <span className="text-slate-700 ">{user.name}</span>
                   </div>{' '}
-                  <div className="flex ga-8 md:gap-32  text-lg border-y-2 p-4 border-solid border-slate-300">
+                  <div className="flex ga-8 md:gap-32  text-lg border-y-2 p-4 border-solid border-slate-100">
                     <span className="w-48">Email</span>
                     <span className="text-slate-700 ">{user.email}</span>
                   </div>{' '}
@@ -350,39 +354,50 @@ function Profile() {
                   </div>
                 </div>
               </div>
-              <div className="mt-8 container">
-                <h1 className="text-center shadow-sm p-4 text-3xl">Playlist</h1>
-                <div className="flex flex-wrap items-center justify-center gap-6">
-                  {user.playlist &&
-                    user.playlist.length > 0 &&
-                    user.playlist.map(item => {
-                      return (
-                        <div
-                          key={item.course}
-                          className="w-[70%] flex-col md:w-[20%] shadow-md p-2"
-                        >
-                          <img src={item.poster} alt={item._id} />{' '}
-                          <div className="flex items-center justify-between px-2 py-4">
-                            {' '}
-                            <Link
-                              to={`/course/${item.course}`}
-                              className="btn btn-secondary"
-                            >
-                              watch
-                            </Link>
-                            <button
-                              onClick={() =>
-                                removeFromPlaylistHandler(item.course)
-                              }
-                            >
-                              <MdDelete className="text-2xl" />
-                            </button>
+
+
+
+              {
+                user.playlist &&
+                user.playlist.length > 0 && <div className="mt-8 container">
+                  <h1 className="text-center  p-4 text-3xl">Playlist</h1>
+                  <div className="flex flex-wrap items-center justify-center gap-6 pb-4">
+                    {user.playlist &&
+                      user.playlist.length > 0 &&
+                      user.playlist.map(item => {
+                        return (
+                          <div
+                            key={item?.course?._id}
+                            className=" flex-col w-[275px] shadow border border-gray-100 p-2"
+                          >
+                            <img src={item.poster} alt={item._id} className='p-1'/>{' '}
+                            <div className="flex flex-col gap-2 justify-between px-2 py-4">
+                            <h1 className='text-black text-lg font-bold'>{item?.course?.title}</h1>
+                            <p className='text-black'>{item?.course?.description?.length>90?item?.course?.description?.substring(0,90):item?.course?.description}</p>
+                              {' '}
+                             <div className='flex justify-between gap-2'>
+                             <Link
+                                to={`/course/${item?.course?._id}`}
+                                className="btn btn-secondary"
+                              >
+                                watch
+                              </Link>
+                              <button
+                                onClick={() =>
+                                  removeFromPlaylistHandler(item?.course?._id)
+                                }
+                              >
+                                <MdDelete className="text-2xl" />
+                              </button>
+                             </div>
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                  </div>
                 </div>
-              </div>
+              }
+
             </>
           )}
         </>

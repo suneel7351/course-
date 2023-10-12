@@ -47,48 +47,37 @@ function Header({ user, isLogged }) {
   });
 
   return (
-    <nav className={width < 879 ? 'mobile nav ' : 'nav '}>
-      <div className="header nav-wrapper">
-        <div className="brand flex items-center gap-1 text-lg">
+    <nav className={width < 879 ? 'mobile nav shadow' : 'nav shadow'} >
+      <div className="header nav-wrapper ">
+        <div className="brand flex items-center gap-1 text-lg text-white">
           <Link to={'/'}>
-            <span className="bg-yellow-300 text-blue-500 px-1 py-1 rounded-l-md">
-              {' '}
-              Code
-            </span>
-            <span className="bg-blue-500 text-slate-100 px-1 py-1 ">With</span>
-            <span className="bg-red-300 text-blue-500 px-1 py-1 rounded-r-md">
-              Coder
-            </span>
+           Coder's Info
           </Link>
         </div>
 
         <ul className="nav-list" ref={nav_list}>
           <li onClick={handleLink}>
-            <Link to={'/'}>Home</Link>
+            <Link className='text-white' to={'/'}>Home</Link>
           </li>{' '}
           <li onClick={handleLink}>
-            <Link to={'/courses'}>Courses</Link>
+            <Link className='text-white' to={'/courses'}>Courses</Link>
+          </li>
+          {/* <li onClick={handleLink}>
+            <Link className='text-white' to={'/programming'}>Programming</Link>
           </li>
           <li onClick={handleLink}>
-            <Link to={'/programming'}>Programming</Link>
+            <Link className='text-white' to={'/blog'}>Blog</Link>
           </li>
           <li onClick={handleLink}>
-            <Link to={'/blog'}>Blog</Link>
-          </li>
-          <li onClick={handleLink}>
-            <Link to={'/contact'}>Contact</Link>
+            <Link className='text-white' to={'/contact'}>Contact</Link>
           </li>{' '}
           <li onClick={handleLink}>
-            <Link to={'/about'}>About</Link>
-          </li>
+            <Link className='text-white' to={'/about'}>About</Link>
+          </li> */}
         </ul>
         <div className="right">
           {/* <ColorModeSwitcher /> */}
-          <div className="hamburger" ref={menu} onClick={menuClickHandler}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
+        
 
           {isLogged ? (
             <div className="avatar">
@@ -107,12 +96,12 @@ function Header({ user, isLogged }) {
                     <Link to="/admin/users">All Users</Link>
                   </>
                 )}
-                <button
+                <Link
                   onClick={logoutHandler}
-                  className="btn btn-secondary text-slate-200"
+                  className=""
                 >
                   Logout
-                </button>
+                </Link>
               </div>{' '}
             </div>
           ) : (
@@ -128,6 +117,11 @@ function Header({ user, isLogged }) {
               </Link>
             </>
           )}
+          <div className="hamburger" ref={menu} onClick={menuClickHandler}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </div>
       </div>
     </nav>

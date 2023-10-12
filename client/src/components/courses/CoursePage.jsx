@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
 import CourseAction from '../../redux/actions/course';
 import { useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Loader from '../layouts/Loader';
+
 function CoursePage({ user }) {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -20,6 +20,7 @@ function CoursePage({ user }) {
       dispatch({ type: 'clearError' });
     }
   }, [dispatch, error]);
+
   useEffect(() => {
     dispatch(CourseAction.getCourses(id));
   }, [id, dispatch]);
@@ -39,24 +40,23 @@ function CoursePage({ user }) {
         <>
           {lectures && lectures.length > 0 ? (
             <>
-              {' '}
               <div className="container px-2 py-8">
                 <div className="flex  justify-center flex-col gap-8 md:flex-row">
                   {lectures && lectures.length > 0 && (
                     <div className="flex-1 flex flex-col gap-4">
                       <div className="w-full p-2 shadow-md">
-                        <video
-                          src={
-                            url
-                              ? url
-                              : lectures && lectures.length > 0
-                              ? lectures[0].video.url
-                              : ''
-                          }
-                          className="h-full"
-                          controls
-                          controlsList="nodownload nofullscreen"
-                        ></video>
+                        {url ? (
+                          <video
+                            src={url}
+                            className="h-[360px]"
+                            controls
+                            controlsList="nodownload nofullscreen"
+                          ></video>
+                        ) : (
+                          <div className="h-[360px] bg-gray-300 flex items-center justify-center">
+                            Video not available
+                          </div>
+                        )}
                       </div>
                       <h1 className="text-xl text-slate-700">
                         <span className="mr-2">#{lectureNo}</span>
@@ -66,7 +66,7 @@ function CoursePage({ user }) {
                             lectures.length > 0 &&
                             lectures[0].title}
                       </h1>
-                      <span className="text-xl">Description : </span>
+                      <span className="text-xl">Description: </span>
                       <p>
                         {description
                           ? description
@@ -91,7 +91,7 @@ function CoursePage({ user }) {
                               )
                             }
                             key={item._id}
-                            className="px-6 py-4 rounded-lg shadow-md cursor-pointer"
+                            className="px-6 py-4 rounded border border-gray-100 bg-white shadow cursor-pointer"
                           >
                             #{index + 1} <span className="mr-1"></span>
                             {item.title}

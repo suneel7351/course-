@@ -7,6 +7,7 @@ const courseReducer = createReducer(
     error: null,
     message: null,
     lectures: [],
+    course:null
   },
   {
     getAllCourseRequest: state => {
@@ -27,11 +28,13 @@ const courseReducer = createReducer(
     getCourseSuccess: (state, action) => {
       state.loading = false;
       state.lectures = action.payload.lectures;
+      state.course=action.payload.course
     },
     getCourseFail: (state, action) => {
       state.loading = false;
       state.lectures = [];
       state.error = action.payload.message;
+      state.course=null
     },
    
     clearError: state => {

@@ -49,6 +49,41 @@ class Course {
       .json({ suceess: true, message: "Course created successfully." });
   });
 
+
+
+
+  static updateCourse = AsyncError(async (req, res, next) => {
+    try {
+      const courseId = req.params.courseId;
+      const { title, description, category } = req.body;
+      let upload;
+      const course = await CourseModel.findById(courseId);
+     if(req.file){
+      const file = dataUri(req);
+      if (file) {
+        if (course.poster.public_id) {
+          await v2.uploader.destroy(course.poster.public_id);
+        }
+        upload = await v2.uploader.upload(file.content);
+      }
+     }
+      if (title) course.title = title
+      if (description) course.description = description
+      if (category) course.category = category
+      if (upload) course.poster = {
+        public_id: upload.public_id,
+        url: upload.secure_url,
+      }
+
+      await course.save()
+
+      res.status(200).json({ success: true, message: "Course updated successfully." });
+    } catch (error) {
+      console.error(error.message);
+      next(new ErrorHandler("Internal Server Error", 500));
+    }
+  });
+
   //<-------------------------------Get Course Lecture-------------------------------------->
 
   static getCourseLecture = AsyncError(async (req, res, next) => {
@@ -57,8 +92,13 @@ class Course {
     if (!course) return next(new ErrorHandler("Course Not found.", 404));
     course.views += 1;
     await course.save();
-    res.status(200).json({ success: true, lectures: course.lectures });
+    res.status(200).json({ success: true, lectures: course.lectures,course });
   });
+
+
+
+
+
 
   //<-------------------------------Crate Course Lecture-------------------------------------->
   // 100mb maxsize allow for free
@@ -86,6 +126,68 @@ class Course {
     await course.save();
     res.status(200).json({ success: true, message: "Lecture added " });
   });
+
+
+
+
+  static updateCourseLecture = AsyncError(async (req, res, next) => {
+    const { courseId, lectureId } = req.query;
+    const { title, description } = req.body;
+
+   
+    try {
+      let course = await CourseModel.findById(courseId);
+      if (!course) return next(new ErrorHandler("Course Not found.", 404));
+  
+      // Check if req.file is present
+      if (req.file) {
+        // If present, remove the existing video
+        const lectureIndex = course.lectures.findIndex(lecture => lecture._id == lectureId);
+        if (lectureIndex !== -1) {
+          if (course.lectures[lectureIndex].video.public_id) {
+            await v2.uploader.destroy(course.lectures[lectureIndex].video.public_id);
+          }
+  
+          // Upload the new video
+          const file = dataUri(req);
+          const upload = await v2.uploader.upload(file.content, {
+            resource_type: "video",
+          });
+  
+          // Update the lecture with the new video
+          course.lectures[lectureIndex] = {
+            title: title || course.lectures[lectureIndex].title,
+            description: description || course.lectures[lectureIndex].description,
+            video: {
+              public_id: upload.public_id,
+              url: upload.secure_url,
+            },
+          };
+        }
+      } else {
+        // If req.file is not present, update other fields
+        const lectureIndex = course.lectures.findIndex(lecture => lecture._id == lectureId);
+        if (lectureIndex !== -1) {
+          course.lectures[lectureIndex] = {
+            title: title || course.lectures[lectureIndex].title,
+            description: description || course.lectures[lectureIndex].description,
+            video: course.lectures[lectureIndex].video, // Retain the existing video if not present in req.file
+          };
+        }
+      }
+  
+      await course.save();
+
+     
+      res.status(200).json({ success: true, message: "Lecture updated successfully." });
+    } catch (error) {
+      console.error(error);
+      next(new ErrorHandler("Internal Server Error", 500));
+    }
+  });
+  
+  
+
 
   // -------------------->Delete Course<--------------------------
 

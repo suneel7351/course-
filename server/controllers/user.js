@@ -78,7 +78,10 @@ class User {
   // -------------------------------------->Get My Profile<------------------------------------------->
 
   static getMyProfile = AsyncError(async (req, res, next) => {
-    const user = await UserModel.findById(req.user._id);
+    const user = await UserModel.findById(req.user._id).populate({
+      path: 'playlist.course',
+      model: 'course', 
+    });
     res.status(200).json({ success: true, user });
   });
 

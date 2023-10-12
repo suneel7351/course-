@@ -20,6 +20,9 @@ const courseSchema = new mongoose.Schema({
     required: true,
     minLength: [30, "Atleast 20 Character required."],
   },
+  price:{
+    type:Number,
+  },
   lectures: [
     {
       title: {

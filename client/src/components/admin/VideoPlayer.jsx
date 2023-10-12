@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import {AiOutlinePlayCircle} from 'react-icons/ai'
 function VideoPlayer({ videoUrl }) {
   const [showModal, setShowModal] = useState(false);
 
@@ -14,8 +14,8 @@ function VideoPlayer({ videoUrl }) {
   return (
     <div>
       {!showModal && (
-        <button onClick={handlePlayClick} className="mt-1 btn btn-secondary">
-          Play Video
+        <button onClick={handlePlayClick} className="mt-1 btn btn-secondary flex items-center gap-2">
+          <span>Play</span> <AiOutlinePlayCircle/>
         </button>
       )}
 
@@ -34,7 +34,7 @@ function VideoPlayer({ videoUrl }) {
                 />
                 <span
                   onClick={handleCloseClick}
-                  className="cursor-pointer text-5xl btn btn-secondary my-4  z-50"
+                  className="cursor-pointer text-5xl w-4 btn btn-secondary my-4 z-50"
                 >
                   Close
                 </span>

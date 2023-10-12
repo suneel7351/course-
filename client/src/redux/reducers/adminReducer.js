@@ -20,6 +20,17 @@ const adminReducer = createReducer(
       state.loading = false;
       state.error = action.payload;
     },
+    updateCourseRequest: state => {
+      state.loading = true;
+    },
+    updateCourseSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    },
+    updateCourseFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
     addLectureRequest: state => {
       state.loading = true;
     },
@@ -28,6 +39,17 @@ const adminReducer = createReducer(
       state.message = action.payload;
     },
     addLectureFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    updateLectureRequest: state => {
+      state.loading = true;
+    },
+    updateLectureSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    },
+    updateLectureFail: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },

@@ -5,6 +5,8 @@ import AdminAction from '../../redux/actions/admin';
 import { MdDelete } from 'react-icons/md';
 import Loader from '../layouts/Loader';
 import toast from 'react-hot-toast';
+import {FiExternalLink} from 'react-icons/fi'
+import {AiOutlineEdit} from 'react-icons/ai'
 function Courses() {
 
 
@@ -126,9 +128,14 @@ function Courses() {
                           <div className="flex gap-2 items-center">
                             <Link
                               to={`/admin/course/${item._id}`}
-                              className="btn btn-secondary"
+                              className=""
                             >
-                              View Lectures
+                        <FiExternalLink/>
+                            </Link>  <Link
+                              to={`/admin/course/update/${item._id}`}
+                              className=""
+                            >
+                        <AiOutlineEdit/>
                             </Link>
                             {loading ? (
                               <button className="btn btn-secondary">

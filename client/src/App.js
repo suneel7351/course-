@@ -27,11 +27,13 @@ import Lectures from './components/admin/Lectures';
 import AdminRoute from './AdminRoute';
 import SubscriberRoute from './SubscriberRoute';
 import Work from './components/Work';
+import UpdateCourses from './components/admin/UpdateCourse';
 
 function App() {
   // window.addEventListener('contextmenu', e => {
   //   e.preventDefault();
   // });
+  
 
   const { error, message, isLogged, user } = useSelector(state => state.user);
   const { courses } = useSelector(state => state.course);
@@ -56,7 +58,7 @@ function App() {
     <BrowserRouter>
       {' '}
       <Header user={user} isLogged={isLogged} />
-      <div className="mt-24 container mx-auto">
+      <div className="bg-gray-50 pt-24">
         {' '}
         <Routes>
           <Route path="/" element={<Home />} />
@@ -137,6 +139,19 @@ function App() {
                 <AdminRoute
                   isAdmin={user && user.role === 'admin' ? true : false}
                   Children={<Users />}
+                />
+              </ProtectedRoute>
+            }
+          />
+
+<Route
+            exact
+            path="/admin/course/update/:id"
+            element={
+              <ProtectedRoute isAuthenticated={isLogged}>
+                <AdminRoute
+                  isAdmin={user && user.role === 'admin' ? true : false}
+                  Children={<UpdateCourses />}
                 />
               </ProtectedRoute>
             }

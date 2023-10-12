@@ -80,7 +80,7 @@ function CreateCourses() {
           onSubmit={submitHandler}
           encType="multipart/form-data"
         >
-          <h1 className="text-2xl text-slate-700">Register</h1>
+          <h1 className="text-2xl text-slate-700">Create Course</h1>
           <input
             required
             placeholder="Course Title"
@@ -136,7 +136,7 @@ function CreateCourses() {
                 <div className="small-spinner"></div>
               </button>
             ) : (
-              <button className="w-[25%] btn btn-secondary" type="submit">
+              <button className=" btn btn-secondary" type="submit">
                 Create Course
               </button>
             )}

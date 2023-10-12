@@ -3,20 +3,16 @@ import React, { useState, useEffect } from 'react';
 
 import CourseAction from '../../redux/actions/course';
 import { useDispatch, useSelector } from 'react-redux';
-import CourseCard from './CourseCard';
+// import CourseCard from './CourseCard';
+
 import toast from 'react-hot-toast';
 import Loader from '../layouts/Loader';
+import CourseCard from '../CourseCard';
 const Courses = () => {
   const dispatch = useDispatch();
   const [category, setCategory] = useState('');
   const [keyword, setKeyword] = useState('');
-  const Category = [
-    'JavaScript',
-    'Reactjs',
-    'Full Stack',
-    'Nodejs',
-    'React Native',
-  ];
+
   const { courses, error, loading } = useSelector(state => state.course);
   const {
     error: userError,
@@ -49,11 +45,11 @@ const Courses = () => {
   }, [dispatch, error, userError, message]);
   return (
     <>
-      <div className="mt-12 py-4">
-        <h1 className="text-3xl text-center text-bold">Latest Courses</h1>
+      <div className="py-4 container mx-auto">
+        <h1 className="text-3xl text-center text-bold">Explore Courses</h1>
         <div className="w-[80%] mx-auto mt-4">
           {' '}
-          <div className="px-2 py-1 flex border-2 border-solid border-slate-600 active:border-[#eebf00] hover:border-[#eebf00] ease-in-out duration-500  rounded-md">
+          <div className="px-2 py-1 flex border  border-gray-100 active:border-[#eebf00] hover:border-[#eebf00] ease-in-out duration-500 shadow bg-white">
             {' '}
             <input
               name="keyword"
@@ -66,7 +62,7 @@ const Courses = () => {
               Search
             </button>
           </div>
-          <div className="flex gap-2 flex-wrap items-center mt-6 justify-center">
+          {/* <div className="flex gap-2 flex-wrap items-center mt-6 justify-center">
             {Category.map((item, index) => {
               return (
                 <button
@@ -78,15 +74,28 @@ const Courses = () => {
                 </button>
               );
             })}
-          </div>
+          </div> {/* <div className="flex gap-2 flex-wrap items-center mt-6 justify-center">
+            {Category.map((item, index) => {
+              return (
+                <button
+                  key={index}
+                  onClick={() => categoryHandler(item)}
+                  className="btn btn-secondary"
+                >
+                  {item}
+                </button>
+              );
+            })}
+          </div> */}
         </div>
         {loading ? (
           <Loader />
         ) : (
-          <div className="flex flex-wrap justify-evenly  py-8 ">
+          <div className="flex flex-wrap gap-6  py-8 ">
             {courses && courses.length > 0 ? (
               courses.map(item => {
                 return (
+                 
                   <CourseCard
                     _id={item._id}
                     key={item._id}
@@ -98,6 +107,8 @@ const Courses = () => {
                     createdBy={item.createdBy}
                     loading={userLoading}
                   />
+
+                  
                 );
               })
             ) : (
